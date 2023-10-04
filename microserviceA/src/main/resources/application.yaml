@@ -1,0 +1,14 @@
+server:
+  port: 8080
+
+spring:
+  sleuth:
+    sampler:
+      percentage: 1.0
+  zipkin:
+    enabled: false
+    service:
+      name: microserviceA
+
+serviceB:
+  url: http://localhost:8081
