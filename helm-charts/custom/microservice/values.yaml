@@ -1,0 +1,6 @@
+name: microservice
+namespace: application
+replicaCount: 1
+image: ""
+service:
+  port: 8080

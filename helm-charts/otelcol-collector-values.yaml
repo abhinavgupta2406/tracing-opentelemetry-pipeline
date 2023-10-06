@@ -1,0 +1,40 @@
+mode: deployment
+
+replicaCount: 3
+
+namespaceOverride: tracing
+fullnameOverride: opentelemetry-collector
+
+service:
+  clusterIP: None
+
+config:
+  exporters:
+    zipkin:
+      endpoint: http://zipkin.default:9411/api/v2/spans
+      tls:
+        insecure: true
+
+  processors:
+    attributes:
+      actions:
+        - key: collector_pod_ip
+          action: insert
+          value: ${env:MY_POD_IP}
+
+  service:
+    pipelines:
+      traces:
+        exporters:
+          - zipkin
+          - debug
+        processors:
+          - attributes
+          - memory_limiter
+          - batch
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 256Mi
+

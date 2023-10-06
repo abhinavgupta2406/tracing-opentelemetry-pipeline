@@ -1,0 +1,36 @@
+mode: deployment
+
+replicaCount: 2
+
+namespaceOverride: tracing
+fullnameOverride: opentelemetry-loadbalancer
+
+config:
+  exporters:
+    loadbalancing:
+      protocol:
+        otlp:
+          sending_queue:
+            num_consumers: 5
+            queue_size: 100
+          retry_on_failure:
+            enabled: true
+          tls:
+            insecure: true
+      resolver:
+        dns:
+          hostname: opentelemetry-collector.tracing
+          port: 4317
+
+  service:
+    pipelines:
+      traces:
+        exporters:
+          - loadbalancing
+          - debug
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 256Mi
+

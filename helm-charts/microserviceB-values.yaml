@@ -1,0 +1,6 @@
+name: microservice-b
+namespace: application
+replicaCount: 1
+image: localhost:5000/service-b
+service:
+  port: 8081

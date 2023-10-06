@@ -1,0 +1,6 @@
+name: microservice-c
+namespace: application
+replicaCount: 1
+image: localhost:5000/service-c
+service:
+  port: 8082
